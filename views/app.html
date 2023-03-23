@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>App.ir</title>
+        <link rel="icon" type="image/x-icon" href="https://ik.imagekit.io/fk3jtogsvr/Black_Minimalist_Initial_Font_BE_Logo__3_.png?ik-sdk-version=javascript-1.4.3&updatedAt=1678008573960">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- bootstrap css cdn  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <!-- jquery used only for nav link onhover bg color change  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <style>
+        
+        .nav-link:hover{
+            background-color:#367fa9;
+            transform: scale(1.04);
+            transition: all .2s;
+        }
+        .navbar{
+            padding: 0;
+        }
+        .navbar .navbar-nav .nav-link{
+            padding: 1em;
+            transition: all .2s;
+        }
+        
+        .navbar .navbar-nav li.active > a {
+            background-color: #367fa9;
+            color: #fff;
+        }
+        #reports ,#monitor ,#about ,#reportLoader,#monitorLoader,#reportAlert,#dashboard,#sync,#search,#syncLoader,#searchagedetailsLoader,#searchaofLoader,#tdrLoader,#bifurLoader,#bcwiseLoader,#accLoader{
+            display: none;
+        }
+        .btn-primary:hover{
+            background-color: #367fa9 !important;
+            border-color: #367fa9;
+            transform: scale(1.1);
+            transition: all .2s;
+        }
+        .btn-primary, .btn-primary:active, .btn-primary:visited  {
+        background-color: #3c8dbc !important;
+        border-color: #3c8dbc;
+        }
+        select ,input[type=date],input[type=text] {
+    padding: 4px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    }
+    @media only screen and (max-width: 600px) {
+    #formReport,#formMonitor,#formSync,#formSearchaof,#formSearchagentdetails{
+        flex-direction: column;
+    }
+    #navul{
+        margin-top: 3%;
+    }
+}
+    @media only screen and (min-width: 768px) {
+        #navheight{
+        height: 10vh;
+    }
+    }
+    </style>
+    </head>
+    <body>
+        <!-- nav bar  -->
+        <header >
+            <nav class="navbar navbar-expand-lg navbar-dark shadow p-3 mb-5 " style="background-color: #3c8dbc ;" id="navheight">
+                <div class="container-fluid">
+                    <a class="navbar-brand fw-bold fs-4" href="#">
+                        App.ir</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                        <ul class="navbar-nav me-auto  mb-2 mb-lg-0" id="navul">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" onclick="return hideSection('#dashboard');" href="#">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" onclick="return hideSection('#reports');" href="#">Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" onclick="return hideSection('#monitor');" href="#">Monitoring</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" onclick="return hideSection('#sync');" href="#">Sync Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" onclick="return hideSection('#search');" href="#">Search details</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <section class="container">
+
+                <!-- home page  -->
+                <article id="home" >
+                    <h4 class="card-header text-center p-4">Welcome to App.ir</h4>
+                </article>
+                <article id="dashboard">
+                    <div class="container">
+                        <div class="row">
+                        
+                        <div id="tdr1" class="col-sm-5">
+                            <div id="tdrLoader" class="text-center mt-5">
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="row m-2">
+                            <div id="bifurLoader" class="text-center mt-5">
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                </div>
+                            </div>
+                            <div id="bifur"></div>
+                            </div>
+                            <div class="row m-2">
+                                <div id="bcwiseLoader" class="text-center mt-5">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                    </div>
+                                </div>
+                                <div id="bcwise"></div>
+                            </div>
+                            <div class="row m-2">
+                                <div id="accLoader" class="text-center mt-5">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                    </div>
+                                </div>
+                                <div id="acc"></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </article>
+                <!-- reports page  -->
+                <article id="reports">
+                    <div class="card">
+                    <h5 class="card-header">Reports</h5>
+                    <div class="container">
+                        <form class="d-flex m-2" id="formReport">
+                                <select class="m-2" name="type" id="report" required>
+                                    <option value="" selected disabled>select report</option>
+                                    <option value="FISTACK_INB_VERIFICATION">Verification report</option>
+                                    <option value="FISTACK_INB_BCTXN">Transaction report</option>
+                                    <option value="FISTACK_ACCOMODATIVE_REPORT">Accomodative report</option>
+                                    <option value="FISTACK_AJY_ENR">A-Enrol report</option>
+                                    <option value="FISTACK_AJY_RDFD">A-RDFD report</option>
+                                    <option value="FISTACK_VENDORWISE_REPORT">Vendor wise report</option>
+                                    <option value="FISTACK_INB_BCLOGIN">Bc login report</option>
+                                    <option value="FIG_BIFURGATION_REPORT">Bifurgation report</option>
+                                    <option value="FIG_AJAY_TXN_REPORT">A-Txn report</option>
+                                </select>
+                                <input class="m-2" type="date" id="fromdate" name="fromdate">
+                                <input class="m-2" type="date" id="todate" name="todate">
+                                <input class="btn m-2  btn-primary  btn-sm" type="submit" value="Export" >
+                        </form>
+                        </div>
+                        </div >
+                        <!-- loader  -->
+                        <div id="reportLoader" class="text-center mt-5">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            </div>
+                        </div>
+                        <div id="reportAlert">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                    <path
+                                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                </symbol></svg>
+                        <div class="alert alert-success d-flex alert-dismissible fade show align-items-center mt-3" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                                <use xlink:href="#check-circle-fill" />
+                            </svg>
+                            <div>
+                                Report Downloaded Successfully!
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        </div>
+                    </article>
+
+                        <!-- monitor page  -->
+                <article id="monitor">
+                    <div class="card">
+                    <h5 class="card-header">Transaction and Enrolment Monitoring</h5>
+                    <div class="card-body">
+                        <form class="d-flex" id="formMonitor">
+                            <div class="m-2">
+                                <select class="" name="type" id="monitor" required>
+                                    <option value="" selected disabled>select service</option>
+                                    <option value="FISTACK_INB_TXN_MONITORING_G1">Transaction gateway 1</option>
+                                    <option value="FISTACK_INB_TXN_MONITORING_G2">Transaction gateway 2</option>
+                                    <option value="FISTACK_INB_TXN_MONITORING">Transaction both gateways</option>
+                                    <option value="FISTACK_ENR_MONITORING">Enrolment</option>
+                                </select>
+                            </div>
+                            <div class="m-2">
+                                <input class="btn  btn-primary btn-sm" type="submit" value="Live" >
+                            </div>
+                        </form>
+                        </div>
+                        </div>
+                        <!-- loader  -->
+                        <div id="monitorLoader" class="text-center mt-5">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            </div>
+                        </div>
+                            <div id="table" class="mt-3">
+                            </div>
+                </article>
+                <article id="sync">
+                    <div class="card">
+                        <h5 class="card-header">Data Sync</h5>
+                        <div class="container">
+                            <form class="d-flex m-2" id="formSync">
+                                <select class="m-2" name="type" id="sync" required>
+                                    <option value="" selected disabled>select sync</option>
+                                    <option value="FISTACK_SYNC_AOFNO">Aofno Sync</option>
+                                    <option value="FIG_SYNC_AJAY_TXN_REPORT">A-txn Sync</option>
+                                    <option value="FIG_SYNC_BIFURGATION">Bifurgation Sync</option>
+                                </select>
+                                <input class="m-2" type="date" id="fromdate" name="fromdate">
+                                <input class="m-2" type="date" id="todate" name="todate">
+                                <input class="btn m-2  btn-primary  btn-sm" type="submit" value="Sync">
+                            </form>
+                        </div>
+                    </div>
+                    <div id="aftersync" class="m-4 text-center"></div>
+                    <!-- loader  -->
+                    <div id="syncLoader" class="text-center mt-5">
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        </div>
+                    </div>
+                </article>
+                <article id="search">
+                    <div class="card m-4">
+                        <h5 class="card-header">Ref No</h5>
+                        <div class="card-body">
+                            <form class="d-flex" id="formSearchaof">
+                                <div class="m-2">
+                                    <select class="" name="type" id="searchaof" required>
+                                        <option value="FISTACK_AOFNO" selected>Search Ref No</option>
+                                    </select>
+                                </div>
+                                <div class="m-2">
+                                    <input type="text" id="firstidno" name="firstidno">
+                                </div>
+                                <div class="m-2">
+                                    <input class="btn  btn-primary btn-sm" type="submit" value="Search">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="reftable" class="m-4">
+                    </div>
+                    <!-- loader  -->
+                    <div id="searchaofLoader" class="text-center mt-2">
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        </div>
+                    </div>
+                    <div class="card m-4">
+                        <h5 class="card-header">Agent Details</h5>
+                        <div class="card-body">
+                            <form class="d-flex" id="formSearchagentdetails">
+                                <div class="m-2">
+                                    <select class="" name="type" id="searchagentdetails" required>
+                                        <option value="FISTACK_INB_BCMASTER" selected>Search Agent details</option>
+                                    </select>
+                                </div>
+                                <div class="m-2">
+                                    <input type="text" id="koid" name="koid">
+                                </div>
+                                <div class="m-2">
+                                    <input class="btn  btn-primary btn-sm" type="submit" value="Search">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="agenttable" class="m-4" >
+                    </div>
+                    <div id="searchagedetailsLoader" class="text-center mt-2">
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        </div>
+                    </div>
+                </article>
+        </section>
+
+            <!-- bootstrap js cdn  -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+            
+            
+            <script type="text/javascript">
+
+                // for change navbar active link bg color 
+                $('.navbar-nav a').on('click', function () {
+                    $('.navbar-nav').find('li.active').removeClass('active');
+                    $(this).parent('li').addClass('active');
+                });
+
+                    // routing through pages 
+                const hideSection = (id) => {
+                        const hide=document.querySelectorAll("#home,#reports,#monitor,#dashboard,#sync,#search");
+                        hide.forEach((element) => {
+                            element.style.display = "none";
+                        });
+                        const unhide = document.querySelectorAll(id);
+                    unhide.forEach((element) => {
+                        element.style.display = "block";
+                    });}
+
+                
+                    var requestUrl='/mis';
+
+                    // reusable fetch api
+                    const useFetch= async (url,requestMethod,data)=>{
+                    return await fetch(url,
+                        {
+                            method: requestMethod,
+                            body: data,
+                        }).then(response=>response.json()).catch((error) => {
+                            console.log(error.message);
+                            if(error.message == 'Failed to fetch') throw "Request has forbidden by antivirus!";
+                        });
+                        
+                    }
+                    // response-parser-middleware
+                    const respParser = (data) => {
+                            var parsedData = []
+                            for (row of data) {
+                                parsedData.push(Object.values(row))
+                            }
+                            return parsedData
+                        }
+
+                    // download reports
+                    const download = function (data,typeValue) {
+                            const blob = new Blob([data], { type: 'text/csv' });
+                            const url = window.URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.setAttribute('href', url)
+                            const reportName = typeValue+'_'+new Date().toISOString();
+                            a.setAttribute('download', `${reportName}.csv`);
+                            a.click();
+                        }
+
+                        // csv maker
+                    const csvmaker = function (data, exportHeader) {
+                            let csvRows = [];
+                            csvRows.push(exportHeader.join('|'));
+                            for(let row of data){
+                            const values = row.join('|');
+                            csvRows.push(values);
+                            }
+                            return csvRows.join('\n')
+                        }
+
+                        const displayobj = (data, header) => {
+                                let tablebody = ''
+                                for (i = 0; i <= 16; i++) {
+                                    tablebody += `<tr><td> <div class="container"><div class="row"><div class="fw-bold col-sm">${header[i]}</div><div class="col-sm">${data[0][i]}</div></div></div></td></tr>`
+                                }
+                                return outputTable = `<div class="card"><table class="table table-borderless"> 
+						<tbody>
+						${tablebody}
+						</tbody>
+						</table></div>`
+                            }
+
+                        // display data in table 
+                        const displayTable=(data,header)=>{
+                            let tableHeader = '';
+                            let tableData = '';
+
+                            for(let row of header){
+                                tableHeader += `<th scope="col">${row}</th>`
+                            }
+                            
+                            for(let row of data){
+                                tableData +='<tr>'
+                                for(let col of row){
+                                    tableData += `<td>${col}</td>`
+                                }
+                                tableData +='</tr>'
+                            }
+                            
+                        return outputTable = `<table class="table"> 
+						<thead class="thead-light">
+							<tr>
+							${tableHeader}
+							</tr>
+						</thead>
+						<tbody>
+							${tableData}
+						</tbody>
+						</table>`
+                        }
+
+                            // header needed for reports
+                            const headers = {
+                                'FISTACK_INB_BCTXN': ['bank', 'date(Transaction_Time)', 'id_customer_info', 'id_terminal_info', 'cust_cards', 'sweep_txn', 'sweep_amt', 'txn_cnt', 'txn_amt', 'scot_txn', 'ifis_txn', 'rupay_txn', 'aeps_txn', 'fund_transfer_txn', 'offline_txn', 'total_cr_txn', 'total_dr_txn', 'total_cr_amt', 'total_dr_amt', 'scot_amt', 'scot_cr_txn', 'scot_cr_amt', 'scot_dr_txn', 'scot_dr_amt', 'ifis_amt', 'ifis_cr_txn', 'ifis_cr_amt', 'ifis_dr_txn', 'ifis_dr_amt', 'rupay_amt', 'rupay_cr_txn', 'rupay_cr_amt', 'rupay_dr_txn', 'rupay_dr_amt', 'aeps_amt', 'aeps_cr_txn', 'aeps_cr_amt', 'aeps_dr_txn', 'aeps_dr_amt', 'fund_transfer_amt', 'offline_amt', 'offline_cr_txn', 'offline_cr_amt', 'offline_dr_txn', 'offline_dr_amt', 'aadhaar_login', 'exported_on', 'unique_txn_cust_count', 'accom_txn_count', 'accom_txn_amt', 'self_txn', 'self_txn_amt', 'split_txn', 'split_txn_amt', 'accom_ft_cnt', 'accom_ft_amt', 'balance_zero', 'balance_zero_amt', 'imps_count', 'imps_amt', 'onus_txn_count', 'onus_txn_amt', 'offus_txn_count', 'offus_txn_amt', 'aeps_onus_count', 'aeps_offus_count', 'aeps_onus_amt', 'aeps_offus_amt', 'rupay_onus_count', 'rupay_offus_count', 'rupay_onus_amt', 'rupay_offus_amt', 'tpd_txn_count', 'tpd_txn_amt', 'bbps_txn', 'bbps_amt', 'shg_txn', 'shg_amt', 'shg_cr_txn', 'shg_cr_amt', 'shg_dr_txn', 'shg_dr_amt', 'imps_cr_txn', 'imps_cr_amt', 'total_fin_txn', 'total_fin_amt', 'total_nonfin_cnt', 'aeps_onus_cr_cnt', 'aeps_onus_cr_amt', 'aeps_onus_dr_cnt', 'aeps_onus_dr_amt', 'aeps_onus_ft_cnt', 'aeps_onus_ft_amt', 'aeps_offus_cr_cnt', 'aeps_offus_cr_amt', 'aeps_offus_dr_cnt', 'aeps_offus_dr_amt', 'aeps_offus_ft_cnt', 'aeps_offus_ft_amt', 'rupay_onus_cr_cnt', 'rupay_onus_cr_amt', 'rupay_onus_dr_cnt', 'rupay_onus_dr_amt', 'rupay_offus_cr_cnt', 'rupay_offus_cr_amt', 'rupay_offus_dr_cnt', 'rupay_offus_dr_amt', 'unique_txn_cust_count', 'total_be_txn', 'total_mini_stmt_txn', 'aeps_onus_non_fin', 'aeps_onus_bal_enq', 'aeps_onus_mini_stmt', 'aeps_offus_non_fin', 'aeps_offus_bal_enq', 'aeps_offus_mini_stmt', 'rupay_onus_non_fin', 'rupay_onus_bal_enq', 'rupay_onus_mini_stmt', 'rupay_offus_non_fin', 'rupay_offus_bal_enq', 'rupay_offus_mini_stmt'],
+                                'FISTACK_INB_VERIFICATION': ['DATE', 'bcwise_txn_cnt', 'bcwise_success_amt', 'enrol_cnt', 'mis_txn_cnt', 'mis_success_amt', 'txn_txn_cnt', 'txn_success_amt'],
+                                'FISTACK_INB_TXN_MONITORING': ['SerialNo','GatewayRRN', 'VendorID', 'RespToClient', 'Amount', 'ServiceName', 'ONUS', 'ServerTime'],
+                                'FISTACK_ENR_MONITORING': ['enrolstatus', 'receivedon', 'vendorid', 'reason'],
+                                'FISTACK_ACCOMODATIVE_REPORT' : ['Bank', 'TransactionID', 'STAN', 'RRN', 'GatewayRRN', 'TransactionTime', 'CBSTerminalID', 'Agentcode', 'CustAccountNumber', 'CustAadhaarNumber', 'BenfAadhaarNumber', 'transaction_type', 'Amount', 'Application_type', 'ServiceName', 'senttobank', 'txn_with_fp', 'cust_id_customer_info', 'FN_DECRYPT(CustomerCardNumber)', 'exported_on', 'IIN', 'a', 'b', 'c', 'Accomodative_txn', 'inserted_on'],
+                                'FISTACK_AJY_ENR': ['agentcode', 'success_count', 'failure_count', 'exported_on'],
+                                'FISTACK_AJY_RDFD': ['month', 'state', 'district', 'agentcode', 'firstname', 'RD_count', 'RD_amount', 'FD_count', 'FD_amount', 'DDP_count', 'DDP_amount', 'MIP_count', 'MIP_amount', 'exported_on'],
+                                'FISTACK_VENDORWISE_REPORT': ['generated_date','trans_date', 'vendor_id', 'vendor_name', 'success_txn_count', 'enrolment_success'],
+                                'FISTACK_INB_BCLOGIN': ['report_date', 'daily_count', 'monthly_count', 'active_count'],
+                                'FIG_AJAY_TXN_REPORT': ['monthname_', 'branchname', 'state', 'district', 'agentcode', 'bc_name', 'is_login_type_aadhaar', 'distinct_txn_cust', 'no_of_days_bc_worked', 'aeps_credit_count', 'aeps_debit_count', 'aeps_credit_amt', 'aeps_debit_amt', 'ifis_credit_count', 'ifis_debit_count', 'ifis_credit_amt', 'ifis_debit_amt', 'rupay_credit_count', 'rupay_debit_count', 'rupay_credit_amt', 'rupay_debit_amt', 'fund_transfert_count', 'fund_transfert_amt', 'balance_amt', 'total_txn', 'total_amt', 'total_credit_count', 'total_credit_amt', 'total_debit_count', 'total_debit_amt', 'todays_txn', 'exported_on', 'tpd_count', 'tpd_amt'],
+                                'FIG_BIFURGATION_REPORT': ['itgs_request_time', 'cash_deposit_count_onus_success', 'cash_deposit_amt_onus_success', 'cash_wd_onus_success', 'cash_wd_amt_onus_success', 'cash_ft_onus_success', 'cash_ft_amt_onus_success', 'purchase_onus_success', 'purchase_amt_onus_success', 'be_onus_success', 'ms_onus_success', 'cash_deposit_count_offus_acq_success', 'cash_deposit_amt_offus_acq_success', 'cash_wd_offus_acq_success', 'cash_wd_amt_offus_acq_success', 'cash_ft_offus_acq_success', 'cash_ft_amt_offus_acq_success', 'purchase_offus_acq_success', 'purchase_amt_offus_acq_success', 'be_offus_acq_success', 'ms_offus_acq_success', 'cash_deposit_count_tpd_success', 'cash_deposit_amt_tpd_success', 'cash_deposit_count_onus_failed', 'cash_deposit_amt_onus_failed', 'cash_wd_onus_failed', 'cash_wd_amt_onus_failed', 'cash_ft_onus_failed', 'cash_ft_amt_onus_failed', 'purchase_onus_failed', 'purchase_amt_onus_failed', 'be_onus_failed', 'ms_onus_failed', 'cash_deposit_count_offus_acq_failed', 'cash_deposit_amt_offus_acq_failed', 'cash_wd_offus_acq_failed', 'cash_wd_amt_offus_acq_failed', 'cash_ft_offus_acq_failed', 'cash_ft_amt_offus_acq_failed', 'purchase_offus_acq_failed', 'purchase_amt_offus_acq_failed', 'be_offus_acq_failed', 'ms_offus_acq_failed', 'cash_deposit_count_tpd_failed', 'cash_deposit_amt_tpd_failed', 'technical_decline_cnt_onus_financial', 'technical_decline_amt_onus_financial', 'business_decline_cnt_onus_financial', 'business_decline_amt_onus_financial', 'technical_decline_cnt_onus_nonfinancial', 'business_decline_cnt_onus_nonfinancial', 'technical_decline_cnt_offus_acq_financial', 'technical_decline_amt_offus_acq_financial', 'business_decline_cnt_offus_acq_financial', 'business_decline_amt_offus_acq_financial', 'technical_decline_cnt_offus_acq_nonfinancial', 'business_decline_cnt_offus_acq_nonfinancial', 'technical_decline_cnt_tpd', 'technical_decline_amt_tpd', 'business_decline_cnt_tpd', 'business_decline_amt_tpd'],
+                                'FISTACK_AOFNO':['Refno','Status','FirstidNo'],
+                                'FISTACK_INB_BCMASTER': ['agentcode', 'firstname', 'middlename', 'gender', 'state', 'zonalname', 'district', 'villagecode', 'vendorcode', 'vendorname', 'branchcode', 'accountnumber', 'personalaccountno', 'status', 'created_on', 'modified_on', 'Location']
+
+                            }
+                            // you can add downloadable reports here 
+                            const downloadables = ['FISTACK_INB_BCTXN','FISTACK_INB_VERIFICATION', 'FISTACK_ACCOMODATIVE_REPORT','FISTACK_AJY_ENR','FISTACK_AJY_RDFD','FISTACK_VENDORWISE_REPORT','FISTACK_INB_BCLOGIN']
+
+                            // response need parser
+                            const respNeededParser = ['FIG_BIFURGATION_REPORT','FIG_AJAY_TXN_REPORT']
+                            
+                            // syncable
+                            const synctypes = ['FISTACK_SYNC_AOFNO','FIG_SYNC_AJAY_TXN_REPORT','FIG_SYNC_BIFURGATION']
+
+                            const displayable =['FISTACK_INB_TXN_MONITORING_G1','FISTACK_INB_TXN_MONITORING_G2','FISTACK_INB_TXN_MONITORING','FISTACK_ENR_MONITORING']
+
+                            const search=['FISTACK_AOFNO']
+
+                            // form handler 
+                    const handleSubmit = (e,id,loaderId)=>{
+                        e.preventDefault();
+                        const loader = document.getElementById(loaderId)
+                        //enabling loader here
+                        loader.style.display='block';
+                        let alert = document.getElementById('reportAlert');
+                        formData=new FormData(id);
+
+                        // extracting type value from formdata for generating export headers 
+                        const [type, typeValue] = [...formData.entries()][0];
+
+                        const exportHeader= typeValue == 'FISTACK_INB_TXN_MONITORING_G1'|| typeValue == 'FISTACK_INB_TXN_MONITORING_G2' || typeValue == 'FISTACK_INB_TXN_MONITORING' ? headers['FISTACK_INB_TXN_MONITORING'] : headers[typeValue]
+
+                        useFetch(requestUrl,'POST',formData).then((data)=>{
+                                
+                                
+                                if(synctypes.includes(typeValue)){
+                                    loader.style.display = 'none';
+                                    return document.getElementById('aftersync').innerHTML =`<h6 class="card card-body"> ${typeValue} - Last Synced Date - ${typeValue=='FIG_SYNC_AJAY_TXN_REPORT' ? data[0]['get_reportajay'] : typeValue == 'FIG_SYNC_BIFURGATION' ? data[0]['sync_report_bifurgation'] : data }</h6>`;
+                                }
+                            
+
+                            if (respNeededParser.includes(typeValue)) {
+                                var parsedData = respParser(data);
+                                const csvdata = csvmaker(parsedData, exportHeader);
+                                loader.style.display = 'none';
+                                download(csvdata, typeValue);
+                                return alert.style.display = 'block';
+                            }
+                            
+
+                            //  reports downloading 
+                            if(downloadables.includes(typeValue)) {
+                                const csvdata = csvmaker(data, exportHeader);
+                                loader.style.display = 'none';
+                                download(csvdata, typeValue);
+                                return alert.style.display = 'block';
+                            }
+                            
+                            if(search.includes(typeValue)){
+                                loader.style.display = 'none';
+                                return document.getElementById('reftable').innerHTML = displayTable(data, exportHeader);
+                            }
+                            //  reports displaying
+                            if(displayable.includes(typeValue)){
+                                loader.style.display = 'none';
+                                return  document.getElementById('table').innerHTML=displayTable(data,exportHeader);
+                            }
+                            if (typeValue=='FISTACK_INB_BCMASTER') {
+                                if(data.length==0) {
+                                    console.log(data);
+                                    loader.style.display = 'none';
+                                    return confirm("kindly check agentcode!");
+                                }
+                                loader.style.display = 'none';
+                                return document.getElementById('agenttable').innerHTML = displayobj(data, exportHeader);
+                            }
+
+
+                        }).catch((error) => {
+                            // error handling and alert generation
+                            if(error=='Request has forbidden by antivirus!'){
+                            if (confirm(error+'\nClick OK to infiltrate Antivirus!')) {
+                                loader.style.display = 'none';
+                                window.open('https://122.252.240.165:6443/ALB/alb-login.html', '_blank');
+                            } else {
+                                alert(error)
+                            }}
+                            else {
+                                console.log(error.message);
+                                confirm(error)
+                            }
+                        });
+                    }
+
+                    formReport.onsubmit = async (e) => handleSubmit(e, formReport,'reportLoader');
+                    formMonitor.onsubmit = async (e) => handleSubmit(e, formMonitor,'monitorLoader');
+                    formSync.onsubmit = async (e) => handleSubmit(e,formSync,'syncLoader')
+                    formSearchaof.onsubmit = async (e) => handleSubmit(e, formSearchaof, 'searchaofLoader')
+                    formSearchagentdetails.onsubmit = async (e) => handleSubmit(e, formSearchagentdetails, 'searchagedetailsLoader')
+
+                    window.addEventListener("load", (event) => {
+
+                            const tdr=()=>{
+                                const loader = document.getElementById('tdrLoader')
+                                //enabling loader here
+                                loader.style.display = 'block';
+                                formData = new FormData();
+                                formData.append('type','FIG_CHECK_TDR_PARSING')
+                                useFetch(requestUrl,'POST',formData).then((data)=>{
+                                    let bodydata= `<div><h5>Tdr Last Parsed </h5><table class="table "><thead><tr><th>Time</th><th>Vendorid</th></tr></thead><tbody>`
+                                    for (let i = 0; i <= 5; i++) {
+                                        bodydata += `<tr><td>${data[i]['max']}</td><td>${data[i]['itgs_vendor_id']}</td></tr>`}
+                                        bodydata+=`</tbody></table></div>`
+                                        loader.style.display = 'none';
+                                    return document.getElementById('tdr1').innerHTML=bodydata
+                                })
+                            }
+                            const bifur = () => {
+                                const loader = document.getElementById('bifurLoader')
+                                //enabling loader here
+                                loader.style.display = 'block';
+                            formData = new FormData();
+                            formData.append('type', 'FIG_CHECK_BIFURGATION')
+                            useFetch(requestUrl, 'POST', formData).then((data) => {
+                                bodydata =`<div class="card"><div class="card-header">Bifurgation Last Synced</div><div class="card-body"><h6>${data[0]['max']}</h6></div></div>`
+                                loader.style.display = 'none';
+                                return document.getElementById('bifur').innerHTML = bodydata
+                            })
+                        }
+                            const bcac = () => {
+                            const loader1 = document.getElementById('bcwiseLoader')
+                            const loader2 = document.getElementById('accLoader')
+                            //enabling loader here
+                            loader1.style.display = 'block';
+                            loader2.style.display = 'block';
+                            formData = new FormData();
+                            formData.append('type', 'FISTACK_LAST_BCACC')
+                            useFetch(requestUrl, 'POST', formData).then((data) => {
+                                bcwisedata = `<div class="card"><div class="card-header">Bcwise report Last Synced</div><div class="card-body"><h6>${data[0][0]}</h6></div></div>`
+                                accdata = `<div class="card"><div class="card-header">Accomodative report Last Synced</div><div class="card-body"><h6>${data[0][1]}</h6></div></div>`
+                                loader1.style.display = 'none';
+                                loader2.style.display = 'none';
+                                document.getElementById('bcwise').innerHTML = bcwisedata
+                                return document.getElementById('acc').innerHTML = accdata
+                            })}
+                            tdr()
+                            bifur()
+                            bcac()
+                            
+                        });
+        </script>
+    </body>
+</html>
