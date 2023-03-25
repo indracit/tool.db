@@ -4,17 +4,46 @@ const bodyParser = require('body-parser')
 const multer  = require('multer')
 const upload = multer()
 const errorHandler = require('./middleware/errorHandler')
-const { logger} = require('./middleware/logger')
+const { logEvents, logger} = require('./middleware/logger')
 const {port} = require('./appConfig.json')
+const session = require('express-session')
+const {createClient} = require('redis')
+const RedisStore = require("connect-redis").default
+const isAuth = require('./middleware/auth')
+let redisClient = createClient()
 
+redisClient.connect().then((resp)=>{
+    logEvents(`Redis Connected`, 'infoLog.log')
+    logEvents(`Server running in ${port}`, 'infoLog.log')
+    console.log('Redis Connected');
+    app.listen(port,()=>{console.log(`server running in port - ${port}`)})
+}).catch((err)=>{
+    console.log(`${err.name}:${err.message}`);
+    logEvents(`${err.name}: ${err.message}`, 'errLog.log')
+})
+
+
+// Initialize store.
+let redisStore = new RedisStore({
+client: redisClient,
+prefix: "tool.db_session:",
+})
+app.use(
+    session({
+        store: redisStore,
+      resave: false, // required: force lightweight session keep alive (touch)
+      saveUninitialized: false, // recommended: only save session when data exists
+    secret: "peter griffin",
+    })
+)
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.json()) 
 app.use(logger)
-app.use('/',require('./routes/root'))
-app.use('/mis',upload.none(),require('./routes/misRoutes'))
-app.use('/user',require('./routes/userRoutes'))
+app.use('/home',require('./routes/home'))
+app.use('/mis',upload.none(),isAuth,require('./routes/misRoutes'))
+app.use('/user',isAuth,require('./routes/userRoutes'))
 app.use('/createuser',require('./routes/createUserRoute'))
-app.use('/auth',require('./routes/authRoutes'))
+app.use('/',require('./routes/authRoutes'))
 
 
 app.all('*', (req, res) => {
@@ -29,4 +58,5 @@ app.all('*', (req, res) => {
 })
 
 app.use(errorHandler)
-app.listen(port,()=>{console.log(`server running in port - ${port}`)})
+
+

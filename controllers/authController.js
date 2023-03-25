@@ -1,19 +1,25 @@
 const {db} = require('../models/db')
-
+const bcrypt = require('bcrypt')
 
 const login = async (req,res)=>{
     console.log(req.body);
-    res.json({message:'api under construction'})
+    const {username,password} = req.body
+    const userdetails = await db('select username,password from appuser where username=:username',[username])
+    console.log(userdetails);
+    if(userdetails.rows.length==0)return res.json({message:'invalid username'})
+    const match = await bcrypt.compare(password, userdetails.rows[0].PASSWORD);
+
+    if(!match) return res.json({message:'invalid password'})
+    req.session.isAuth=true
+    res.redirect('/home')
+    
 }
 
-const refresh = async (req,res)=>{
-    console.log(req.body);
-    res.json({message:'api under construction'})
-}
 
 const logout = async (req,res)=>{
-    console.log(req.body);
-    res.json({message:'api under construction'})
+    req.session.destroy()
+    res.clearCookie('connect.sid') // clean up!
+    return res.json({ message: 'logging you out' })
 }
 
-module.exports={login,logout,refresh}
+module.exports={login,logout}
