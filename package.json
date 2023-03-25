@@ -10,20 +10,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/indracit/dashboard.ir.app.git"
+    "url": "git+https://github.com/indracit/tool.db.git"
   },
   "author": "indracits",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/indracit/dashboard.ir.app/issues"
+    "url": "https://github.com/indracit/tool.db.git/issues"
   },
-  "homepage": "https://github.com/indracit/dashboard.ir.app#readme",
+  "homepage": "https://github.com/indracit/tool.db.git#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "connect-redis": "^7.0.1",
     "cors": "^2.8.5",
     "date-fns": "^2.29.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-session": "^1.17.3",

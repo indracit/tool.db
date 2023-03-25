@@ -1,6 +1,6 @@
 module.exports = isAuth = async (req,res,next) =>{
     if(req.session.isAuth){
-        next()
+        return next();
     }
-    res.redirect('/auth')
+    res.redirect('/')
 }

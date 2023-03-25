@@ -36,20 +36,21 @@ app.use(
     secret: "peter griffin",
     })
 )
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()) 
 app.use(logger)
-app.use('/home',require('./routes/home'))
 app.use('/mis',upload.none(),isAuth,require('./routes/misRoutes'))
 app.use('/user',isAuth,require('./routes/userRoutes'))
 app.use('/createuser',require('./routes/createUserRoute'))
 app.use('/',require('./routes/authRoutes'))
+app.use('/home',isAuth,require('./routes/homeRoute'))
 
 
 app.all('*', (req, res) => {
     res.status(404)
     if (req.accepts('html')) {
-        res.sendFile(path.join(__dirname, 'views', '404.html'))
+        res.render('404')
     } else if (req.accepts('json')) {
         res.json({ message: '404 Not Found' })
     } else {

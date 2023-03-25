@@ -30,7 +30,7 @@
             background-color: #367fa9;
             color: #fff;
         }
-        #reports ,#monitor ,#about ,#reportLoader,#monitorLoader,#reportAlert,#dashboard,#sync,#search,#syncLoader,#searchagedetailsLoader,#searchaofLoader,#tdrLoader,#bifurLoader,#bcwiseLoader,#accLoader{
+        #reports ,#monitor ,#about ,#reportLoader,#monitorLoader,#reportAlert,#sync,#search,#syncLoader,#searchagedetailsLoader,#searchaofLoader,#tdrLoader,#bifurLoader,#bcwiseLoader,#accLoader{
             display: none;
         }
         .btn-primary:hover{
@@ -92,17 +92,18 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white" onclick="return hideSection('#search');" href="#">Search details</a>
                             </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link text-white" href="/logout">Logout</a>
+                            </li> -->
                         </ul>
                     </div>
-                </div>
+                    
+                    <ul id="navul" class=" navbar-nav me-auto  mb-2 mb-lg-0"> <li class="nav-item">
+                    <a class="nav-link text-white" href="/logout">Logout</a> </li></ul> </div>
+                
             </nav>
         </header>
         <section class="container">
-
-                <!-- home page  -->
-                <article id="home" >
-                    <h4 class="card-header text-center p-4">Welcome to App.ir</h4>
-                </article>
                 <article id="dashboard">
                     <div class="container">
                         <div class="row">
@@ -308,7 +309,7 @@
 
                     // routing through pages 
                 const hideSection = (id) => {
-                        const hide=document.querySelectorAll("#home,#reports,#monitor,#dashboard,#sync,#search");
+                        const hide=document.querySelectorAll("#reports,#monitor,#dashboard,#sync,#search");
                         hide.forEach((element) => {
                             element.style.display = "none";
                         });
