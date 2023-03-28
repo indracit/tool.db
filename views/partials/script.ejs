@@ -41,7 +41,7 @@
                                 for (i = 0; i <= 16; i++) {
                                     tablebody += `<tr><td> <div class="container"><div class="row"><div class="fw-bold col-sm">${header[i]}</div><div class="col-sm">${data[0][i]}</div></div></div></td></tr>`
                                 }
-                                return outputTable = `<div class="card"><table class="table table-borderless"> 
+                                return outputTable = `<div class="card shadow-lg p-3 mb-3 bg-body rounded"><table class="table table-borderless"> 
 						<tbody>
 						${tablebody}
 						</tbody>
@@ -65,7 +65,7 @@
                                 tableData +='</tr>'
                             }
                             
-                        return outputTable = `<table class="table"> 
+                        return outputTable = `<div class="card shadow-lg p-3 mb-3 bg-body rounded"><table class="table"> 
 						<thead class="thead-light">
 							<tr>
 							${tableHeader}
@@ -74,7 +74,7 @@
 						<tbody>
 							${tableData}
 						</tbody>
-						</table>`
+						</table></div>`
                         }
 
                             // header needed for reports
@@ -126,7 +126,7 @@
                                 
                                 if(synctypes.includes(typeValue)){
                                     loader.style.display = 'none';
-                                    return document.getElementById('aftersync').innerHTML =`<h6 class="card card-body"> ${typeValue} - Last Synced Date - ${typeValue=='FIG_SYNC_AJAY_TXN_REPORT' ? data[0]['get_reportajay'] : typeValue == 'FIG_SYNC_BIFURGATION' ? data[0]['sync_report_bifurgation'] : data }</h6>`;
+                                    return document.getElementById('aftersync').innerHTML =`<h6 class="card shadow-lg p-3 mb-3 bg-body rounded card-body"> ${typeValue} - Last Synced Date - ${typeValue=='FIG_SYNC_AJAY_TXN_REPORT' ? data[0]['get_reportajay'] : typeValue == 'FIG_SYNC_BIFURGATION' ? data[0]['sync_report_bifurgation'] : data }</h6>`;
                                 }
                             
 
@@ -149,7 +149,7 @@
                             
                             if(search.includes(typeValue)){
                                 loader.style.display = 'none';
-                                return document.getElementById('reftable').innerHTML = displayTable(data, exportHeader);
+                                return document.getElementById('searchtable').innerHTML = displayTable(data, exportHeader);
                             }
                             //  reports displaying
                             if(displayable.includes(typeValue)){
@@ -163,7 +163,7 @@
                                     return confirm("kindly check agentcode!");
                                 }
                                 loader.style.display = 'none';
-                                return document.getElementById('agenttable').innerHTML = displayobj(data, exportHeader);
+                                return document.getElementById('searchtable').innerHTML = displayobj(data, exportHeader);
                             }
 
 
