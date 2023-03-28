@@ -2,12 +2,10 @@ const {db} = require('../models/db')
 const bcrypt = require('bcrypt');
 
 const getAllUser = async (req,res)=>{
-    console.log(req.body);
     res.json({message:'api under construction'})
 }
 
 const createUser = async (req,res)=>{
-
     const {username,password} = req.body
     const userExist = await db('select username from appuser where username = :username',[username])
     if(userExist.rows.length !=0 && userExist.rows[0].USERNAME == username) return  res.json({message:'username already taken'})
@@ -19,12 +17,10 @@ const createUser = async (req,res)=>{
 }
 
 const updateUser = async (req,res)=>{
-    console.log(req.body);
     res.json({message:'api under construction'})
 }
 
 const deletUser = async (req,res)=>{
-    console.log(req.body);
     res.json({message:'api under construction'})
 }
 

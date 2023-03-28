@@ -11,6 +11,7 @@ const {createClient} = require('redis')
 const RedisStore = require("connect-redis").default
 const isAuth = require('./middleware/auth')
 let redisClient = createClient()
+const path = require('path')
 
 redisClient.connect().then((resp)=>{
     logEvents(`Redis Connected`, 'infoLog.log')
@@ -36,6 +37,8 @@ app.use(
     secret: "peter griffin",
     })
 )
+
+app.use('/', express.static(path.join(__dirname, 'public')))
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()) 
@@ -44,7 +47,7 @@ app.use('/mis',upload.none(),isAuth,require('./routes/misRoutes'))
 app.use('/user',isAuth,require('./routes/userRoutes'))
 app.use('/createuser',require('./routes/createUserRoute'))
 app.use('/',require('./routes/authRoutes'))
-app.use('/home',isAuth,require('./routes/homeRoute'))
+app.use('/',isAuth,require('./routes/homeRoute'))
 
 
 app.all('*', (req, res) => {

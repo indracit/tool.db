@@ -8,7 +8,6 @@ const getMisData = async(req,res) => {
     { 'headers': {'Content-Type': 'multipart/form-data'}})
                     .then(resp => res.json(resp.data))
                     .catch(err => {
-                        console.log(`${err.name}:${err.message}`);
                         logEvents(`${err.name}: ${err.message}\t${req.method}\t${req.url}\t${req.headers.origin}`, 'errLog.log')
                     })
 
