@@ -18,4 +18,4 @@ const logout = async (req,res)=>{
     res.clearCookie('connect.sid') // clean up!
     return res.redirect('/')}
 
-module.exports={login,logout}
+module.exports={ login , logout }

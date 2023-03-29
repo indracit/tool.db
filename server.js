@@ -13,22 +13,30 @@ const isAuth = require('./middleware/auth')
 let redisClient = createClient()
 const path = require('path')
 
-redisClient.connect().then((resp)=>{
-    logEvents(`Redis Connected`, 'infoLog.log')
-    logEvents(`Server running in ${port}`, 'infoLog.log')
-    console.log('Redis Connected');
-    app.listen(port,()=>{console.log(`server running in port - ${port}`)})
-}).catch((err)=>{
+
+redisClient.connect().catch((err)=>{
     console.log(`${err.name}:${err.message}`);
     logEvents(`${err.name}: ${err.message}`, 'errLog.log')
 })
 
+redisClient.on("ready", function() {
+    console.log("Redis Connection Successfully Established")
+    logEvents(`Redis Connection Successfully Established`, 'infoLog.log')
+})
+
+redisClient.on("error", function(error) {
+    logEvents(`Redis Connection: Socket Closed Unexpectedly`, 'errLog.log')
+});
+redisClient.on("end", function() {
+    logEvents(`Redis Connection Terminated`, 'infoLog.log')
+})
 
 // Initialize store.
 let redisStore = new RedisStore({
 client: redisClient,
 prefix: "tool.db_session:",
 })
+
 app.use(
     session({
         store: redisStore,
@@ -62,4 +70,10 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler)
 
+app.listen(port,
+    ()=>{
+        console.log(`server running in port - ${port}`);
+        logEvents(`Server running in ${port}`, 'infoLog.log')
+    })
 
+    
