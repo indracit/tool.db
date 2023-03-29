@@ -1,4 +1,4 @@
-# App.ir is dashboard app developed using Node js and ejs.
+# App.ir is a Dashboard app
 
 ## Setup
 
