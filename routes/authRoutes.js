@@ -5,7 +5,7 @@ const path = require('path')
 
 router.route('/')
         .get((req,res)=>{
-    res.render('index',{message:'',title:'App.ir | Login'})})
+        res.render('index',{message:'',title:'App.ir | Login'})})
 
 router.route('/login')
         .post(authController.login)

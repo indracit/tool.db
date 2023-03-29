@@ -9,6 +9,7 @@ const login = async (req,res)=>{
 
     if(!match) return res.render('index',{message:'invalid password !!!'})
     req.session.isAuth = true
+    req.session.username = username
     return res.redirect('/dashboard')
 }
 
