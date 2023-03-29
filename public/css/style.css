@@ -19,6 +19,13 @@
     color: #fff;
 }
 
+#nav-mode{
+    color: #fff;
+
+}
+#nav-mode:hover{
+    color : #dedcdc;
+}
 
 .btn-primary:hover{
     background-color: #367fa9 !important;

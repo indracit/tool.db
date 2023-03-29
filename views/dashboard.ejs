@@ -3,7 +3,7 @@
     <head>
         <%- include('partials/meta') %>
     </head>
-    <body>
+    <body data-bs-theme="light">
         <%- include('partials/nav') %>
         <section class="container">
                 <article id="dashboard">
@@ -42,7 +42,8 @@
                     </div>
                 </article>
         </section>
-        <%- include('partials/navActive') %>
+            <%- include('partials/darkMode') %>
+            <%- include('partials/navActive') %>
             <%- include('partials/navScript') %>
             <%- include('partials/useFetch') %>
             <%- include('partials/dashboardScript') %>
