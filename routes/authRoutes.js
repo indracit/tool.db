@@ -4,7 +4,7 @@ const authController = require('../controllers/authController')
 const path = require('path')
 
 router.route('/').get((req,res)=>{
-    res.render('index',{message:''})})
+    res.render('index',{message:'',title:'App.ir | Login'})})
 
 
 router.route('/login')

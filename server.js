@@ -44,10 +44,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()) 
 app.use(logger)
 app.use('/mis',upload.none(),isAuth,require('./routes/misRoutes'))
-app.use('/user',isAuth,require('./routes/userRoutes'))
-app.use('/createuser',require('./routes/createUserRoute'))
+app.use('/user',require('./routes/userRoutes'))
 app.use('/',require('./routes/authRoutes'))
-app.use('/',isAuth,require('./routes/homeRoute'))
+app.use('/',isAuth,require('./routes/appRoutes'))
 
 
 app.all('*', (req, res) => {

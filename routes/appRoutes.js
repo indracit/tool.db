@@ -4,28 +4,22 @@ const router = express.Router()
 
 router.route('/dashboard')
 .get((req,res)=>{
-    res.render('dashboard')})
+    res.render('dashboard',{title:'App.ir | Dashboard'})})
     
 router.route('/reports').get((req,res)=>{
-    res.render('reports')
+    res.render('reports',{title:'App.ir | Reports'})
 })
 
 router.route('/monitoring').get((req,res)=>{
-    res.render('monitoring')
+    res.render('monitoring',{title:'App.ir | Monitoring'})
 })
 
 router.route('/syncdata').get((req,res)=>{
-    res.render('syncdata')
+    res.render('syncdata',{title:'App.ir | SyncData'})
 })
 
 router.route('/searchdetails').get((req,res)=>{
-    res.render('searchdetails')
+    res.render('searchdetails',{title:'App.ir | SearchDetails'})
 })
-
-router.route('/app').get((req,res)=>{
-    res.render('app')
-})
-
-
 
 module.exports=router
