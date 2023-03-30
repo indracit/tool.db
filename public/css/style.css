@@ -51,6 +51,6 @@ margin-top: 3%;
 }
 @media only screen and (min-width: 768px) {
 #navheight{
-height: 10vh;
+height: 60px;
 }
 }
